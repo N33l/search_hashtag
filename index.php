@@ -1,33 +1,19 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <title>Search tweets</title>
+    <meta charset="UTF-8">
+    <title>Search by #tag</title>
 </head>
 <body>
-
-<div class="search-tweets">hi
-<div id="auto_load_div">
-
-    hi
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div class="form-tweet-search" style=" width: 23%; margin: 0 auto;">
+    <form action="tweets.php" method="GET" class="form-inline ">
+        <i>#</i>
+        <!--		<input type="text" name="q" placeholder="tag" class="sr-only">-->
+        <input type="text" class="form-control" name="q" placeholder="tag" >
+        <button type="submit" name="search" class="btn btn-default">Search</button>
+        <!--		<input type="submit" name="search" value="Search">-->
+    </form>
 </div>
-</div>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-    function auto_load(){
-        $.ajax({
-            url: "fetchTweet.php",
-            cache: false,
-            success: function(data){
-                $("#auto_load_div").html(data);
-            }
-        });
-    }
-
-    $(document).ready(function(){
-        auto_load(); //Call auto_load() function when DOM is Ready
-    });
-    //Refresh auto_load() function after 1000 milliseconds
-    setInterval(auto_load,1000);
-</script>
 </body>
 </html>
