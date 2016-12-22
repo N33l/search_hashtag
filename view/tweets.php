@@ -1,7 +1,7 @@
 <?php
 $hash = $_GET['q'] ?? false;
 if ( empty($hash) ) {
-    header('Location: index.php');
+    header('Location: ../index.php');
 } else {
     require_once('../config/DBConfig.php');
     require_once('../backend/DBOperations.php');

@@ -7,7 +7,7 @@
 <body>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <div class="form-tweet-search" style=" width: 23%; margin: 0 auto;">
-    <form action="tweets.php" method="GET" class="form-inline ">
+    <form action="view/tweets.php" method="GET" class="form-inline ">
         <i>#</i>
         <!--		<input type="text" name="q" placeholder="tag" class="sr-only">-->
         <input type="text" class="form-control" name="q" placeholder="tag" >
