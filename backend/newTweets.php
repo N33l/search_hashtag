@@ -5,7 +5,7 @@
 		echo '[]';
 	} else {
 		require_once(dirname(__DIR__).'/config/DBConfig.php');
-		require_once(dirname(__DIR__).'/DBOperations.php');
+		require_once(dirname(__DIR__).'/backend/DBOperations.php');
 		require_once(dirname(__DIR__).'/util/DBConnection.php');
 
 		$hash = trim($hash, '# ');

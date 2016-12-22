@@ -38,8 +38,6 @@ if ( empty($hash) ) {
             var lastId=tweets[length-1]['tweet_id'];
             generateHtml(tweets,page);
             function auto_load(){
-                console.log('hi');
-
                 $.ajax({
                     url:"../backend/newTweets.php",
                     type:"get",
@@ -49,6 +47,8 @@ if ( empty($hash) ) {
                     },
                     cache: false,
                     success: function(dataArr){
+
+                        console.log(dataArr);
 
                         dataArr = JSON.parse(dataArr);
                         if(dataArr.length >0){
