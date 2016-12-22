@@ -1,5 +1,5 @@
 <?php
-$hash = $_GET['q'] ?? false;
+$hash = isset($_GET['q']) ? $_GET['q']: false;
 if ( empty($hash) ) {
     header('Location: ../index.php');
 } else {
@@ -8,12 +8,12 @@ if ( empty($hash) ) {
     require_once('../util/DBConnection.php');
 
     $hash = trim($hash, '# ');
-    $page = $_GET['page'] ?? 0;
+    $page = isset($_GET['page']) ? $_GET['page']: 0;
 
     $dbObject = new DBOperations(new DBConnection(HOST_NAME, DB_NAME, USER_NAME, PASSWORD));
     $total = $dbObject->noOfTweetsByHash($hash);
     if ( $page > 0 ) {
-        $lastId = $_GET['lastId'] ?? 0;
+        $lastId = isset($_GET['lastId']) ? $_GET['lastId'] : 0;
         $tweets = $dbObject->getTweetsByHash($hash, $lastId, false);
     } else {
         $tweets = $dbObject->getTweetsByHash($hash, 0, true);
