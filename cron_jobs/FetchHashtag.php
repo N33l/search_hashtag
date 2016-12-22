@@ -16,7 +16,7 @@ require_once(dirname(__DIR__).'/util/DBConnection.php');
 /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
 
 
-function hitTwitterApi(){
+function hitTwitterApi($inputData){
 
     $settings = array(
         'oauth_access_token' => OAUTH_ACCESS_TOKEN,
@@ -29,7 +29,7 @@ function hitTwitterApi(){
     $maxTweetId=$dbObject->getMaxTweetId();
 
 
-    $inputData='london';
+
 
     $url = 'https://api.twitter.com/1.1/search/tweets.json';
     $getfield = '?q=#'.$inputData.'&since_id='.$maxTweetId;
@@ -63,7 +63,9 @@ function hitTwitterApi(){
 
     }
 }
-hitTwitterApi();
+
+$inputData='london';
+hitTwitterApi($inputData);
 
 
 

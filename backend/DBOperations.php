@@ -5,7 +5,7 @@
  * Date: 12/19/16
  * Time: 10:12 PM
  */
-require_once('../util/DBConnection.php');
+require_once(dirname(__DIR__).'/util/DBConnection.php');
 
 class DBOperations{
 

@@ -4,9 +4,9 @@
 	if(empty($hash) || empty($lastId)) {
 		echo '[]';
 	} else {
-		require_once('../config/DBConfig.php');
-		require_once('DBOperations.php');
-		require_once('../util/DBConnection.php');
+		require_once(dirname(__DIR__).'/config/DBConfig.php');
+		require_once(dirname(__DIR__).'/DBOperations.php');
+		require_once(dirname(__DIR__).'/util/DBConnection.php');
 
 		$hash = trim($hash, '# ');
 		$dbObject=new DBOperations(new DBConnection(HOST_NAME,DB_NAME,USER_NAME,PASSWORD));

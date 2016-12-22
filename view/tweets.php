@@ -3,9 +3,9 @@ $hash = isset($_GET['q']) ? $_GET['q']: false;
 if ( empty($hash) ) {
     header('Location: ../index.php');
 } else {
-    require_once('../config/DBConfig.php');
-    require_once('../backend/DBOperations.php');
-    require_once('../util/DBConnection.php');
+    require_once(dirname(__DIR__).'/config/DBConfig.php');
+    require_once(dirname(__DIR__).'/backend/DBOperations.php');
+    require_once(dirname(__DIR__).'/util/DBConnection.php');
 
     $hash = trim($hash, '# ');
     $page = isset($_GET['page']) ? $_GET['page']: 0;
@@ -41,7 +41,7 @@ if ( empty($hash) ) {
                 console.log('hi');
 
                 $.ajax({
-                    url: "../backend/newTweets.php",
+                    url:"../backend/newTweets.php",
                     type:"get",
                     data: {
                         q: hashTag,
