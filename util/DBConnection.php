@@ -25,7 +25,7 @@ class DBConnection{
 
         try {
 //            return new PDO('mysql:host=localhost;dbname=someDb', $username, $password);
-            return new PDO('pgsql:host='.$this->hostName.';dbname='.$this->DBName, $this->userName, $this->password);;
+            return new PDO('mysql:host='.$this->hostName.';dbname='.$this->DBName, $this->userName, $this->password);;
         } catch (PDOException $ex) {
 
         }

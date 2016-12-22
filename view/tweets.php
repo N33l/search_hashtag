@@ -32,13 +32,16 @@ if ( empty($hash) ) {
         $(document).ready(function () {
             console.log('here');
             tweets = <?= json_encode($tweets); ?>;
+            page = <?= $page ?>;
             var hashTag="<?= $hash ?>";
             var length=tweets.length;
             var lastId=tweets[length-1]['tweet_id'];
-            generateHtml(tweets);
+            generateHtml(tweets,page);
             function auto_load(){
+                console.log('hi');
+
                 $.ajax({
-                    url: "newTweets.php",
+                    url: "../backend/newTweets.php",
                     type:"get",
                     data: {
                         q: hashTag,
@@ -46,6 +49,7 @@ if ( empty($hash) ) {
                     },
                     cache: false,
                     success: function(dataArr){
+
                         dataArr = JSON.parse(dataArr);
                         if(dataArr.length >0){
                             var arrayLength=dataArr.length;
@@ -56,7 +60,7 @@ if ( empty($hash) ) {
                                 tweets.splice(9, 1);
                             }
                             console.log(tweets);
-                            generateHtml(tweets);
+                            generateHtml(tweets,page);
                         }
                     }
                 });
@@ -69,10 +73,11 @@ if ( empty($hash) ) {
             $('#pagination-class<?=$page+1?>').addClass('active');
 
         });
-        function generateHtml(tweets){
+        function generateHtml(tweets,page){
+            console.log('page',page,(page*10));
             var tweetHtml = '';
             for(var i=0;i<tweets.length;i++){
-                tweetHtml+=" <tr> <td> " + (i+1) + " </td>\
+                tweetHtml+=" <tr> <td> " + (+(page*10) + +(i+1)) + " </td>\
                     <td> " + tweets[i]['tweet'] + " </td> \
                     <td> " + tweets[i]['tweet_id'] + "</td> \
                     </tr>";
