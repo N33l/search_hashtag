@@ -7,12 +7,12 @@
  */
 
 ini_set('display_errors', 1);
-require_once('../util/TwitterAPIHelper.php');
-require_once('../config/TwitterConfig.php');
-require_once('../config/DBConfig.php');
+require_once(dirname(__DIR__).'/util/TwitterAPIHelper.php');
+require_once(dirname(__DIR__).'/config/TwitterConfig.php');
+require_once(dirname(__DIR__).'/config/DBConfig.php');
 
-require_once('../backend/DBOperations.php');
-require_once('../util/DBConnection.php');
+require_once(dirname(__DIR__).'/backend/DBOperations.php');
+require_once(dirname(__DIR__).'/util/DBConnection.php');
 /** Set access tokens here - see: https://dev.twitter.com/apps/ **/
 
 
