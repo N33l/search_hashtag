@@ -5,7 +5,7 @@
  * Date: 12/19/16
  * Time: 10:12 PM
  */
-require_once ('DBConnection.php');
+require_once('../util/DBConnection.php');
 
 class DBOperations{
 
@@ -34,11 +34,13 @@ class DBOperations{
             ") VALUES " . $rowVars;
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        $insertStatement = $this->connection->prepare($insertSql);
         try {
-            $insertStatement->execute($data);
-            $id=$this->connection->lastInsertId();
-            return ($id);
+            $insertStatement = $this->connection->prepare($insertSql);
+            if($insertStatement){
+                $insertStatement->execute($data);
+                $id=$this->connection->lastInsertId();
+                return ($id);
+            }
         } catch ( PDOException $e ) {
             echo $e->getMessage();
         }
@@ -68,11 +70,13 @@ class DBOperations{
 
     public function getMaxTweetId(){
         $selectSql="SELECT MAX(`tweet_id`) as `max_val` FROM `tweet`";
-        $stmt = $this->connection->prepare($selectSql);
         try {
-            $stmt->execute();
-            $result = $stmt->fetch(PDO::FETCH_ASSOC);
-            return ($result['max_val']);
+            $stmt = $this->connection->prepare($selectSql);
+            if($stmt){
+                $stmt->execute();
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                return ($result['max_val']);
+            }
         } catch ( PDOException $e ) {
             echo $e->getMessage();
         }
@@ -82,52 +86,52 @@ class DBOperations{
     private function fetchIdFromValue($value,$tableName,$columnName){
         $selectSql="SELECT `id` FROM $tableName WHERE $columnName =?";
         try {
-        $stmt=$this->connection->prepare($selectSql);
-       if($stmt){
-           $stmt->execute([$value]);
-           $result = $stmt->fetch(PDO::FETCH_ASSOC);
-           return ($result ['id']);
+            $stmt=$this->connection->prepare($selectSql);
+            if($stmt){
+                $stmt->execute([$value]);
+                $result = $stmt->fetch(PDO::FETCH_ASSOC);
+                return ($result ['id']);
             }
         } catch ( PDOException $e ) {
             echo $e->getMessage();
         }
     }
 
-//    public function insertIntoDb($tableName,$columns,$values,$updateCols){
-//
-//        $dataToInsert=$this->formatData($values);
-//
-//        $rowVars = '(' . implode(', ', array_fill(0, count($columns), '?')) . ')';
-//        $allPlaces = implode(', ', array_fill(0, count($values), $rowVars));
-//
-//        $updateColumns=implode(', ', $updateCols);
-//
-//        $insertSql="INSERT INTO $tableName (" . implode(', ', $columns) .
-//            ") VALUES " . $allPlaces . " ON DUPLICATE KEY UPDATE $updateColumns";
-//
-//        $insertStatement=$this->connection->prepare($insertSql);
-//        try {
-//            $insertStatement->execute($dataToInsert);
-//        } catch (PDOException $e){
-//            echo $e->getMessage();
-//        }
-//
-//
-//        //        $insertTweetColumns=[
-//        //            'tweet_id',
-//        //            'hash_tag',
-//        //            'user_id',
-//        //            'text'
-//        //        ];
-//        //
-//        //        $insertUserColumns=[
-//        //            'user_id',
-//        //            'user_name',
-//        //            'user_screen_name',
-//        //            'user_location',
-//        //            'user_description'
-//        //        ];
-//    }
+    //    public function insertIntoDb($tableName,$columns,$values,$updateCols){
+    //
+    //        $dataToInsert=$this->formatData($values);
+    //
+    //        $rowVars = '(' . implode(', ', array_fill(0, count($columns), '?')) . ')';
+    //        $allPlaces = implode(', ', array_fill(0, count($values), $rowVars));
+    //
+    //        $updateColumns=implode(', ', $updateCols);
+    //
+    //        $insertSql="INSERT INTO $tableName (" . implode(', ', $columns) .
+    //            ") VALUES " . $allPlaces . " ON DUPLICATE KEY UPDATE $updateColumns";
+    //
+    //        $insertStatement=$this->connection->prepare($insertSql);
+    //        try {
+    //            $insertStatement->execute($dataToInsert);
+    //        } catch (PDOException $e){
+    //            echo $e->getMessage();
+    //        }
+    //
+    //
+    //        //        $insertTweetColumns=[
+    //        //            'tweet_id',
+    //        //            'hash_tag',
+    //        //            'user_id',
+    //        //            'text'
+    //        //        ];
+    //        //
+    //        //        $insertUserColumns=[
+    //        //            'user_id',
+    //        //            'user_name',
+    //        //            'user_screen_name',
+    //        //            'user_location',
+    //        //            'user_description'
+    //        //        ];
+    //    }
 
     private function isExists($value,$tableName,$columnName){
         $countSql="SELECT COUNT(*) AS `total` FROM $tableName WHERE $columnName = ?";
@@ -145,6 +149,24 @@ class DBOperations{
             echo $e->getMessage();
         }
 
+    }
+
+    public function noOfTweetsByHash($hash) {
+        $sql = 'SELECT COUNT(`tweet_id`) AS cnt FROM `hash_tag_tweet_mapper` WHERE hash_id = (SELECT `id` FROM `hash_tag` WHERE hash_tag = "' . $hash .'")';
+        try {
+            $stmt = $this->connection->query($sql);
+            if($stmt) {
+                $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                $tweets = $stmt->fetch();
+                if(empty($tweets)) {
+                    return 0;
+                } else {
+                    return $tweets['cnt'];
+                }
+            }
+        } catch(PDOException $ex) {
+            echo $ex->getMessage();
+        }
     }
 
     public function getTweetsByHash($hash, $lastId = 0, $new = false, $size = 10) {

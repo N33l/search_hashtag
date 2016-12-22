@@ -29,8 +29,5 @@ class DBConnection{
         } catch (PDOException $ex) {
 
         }
-
     }
-
-
 }
