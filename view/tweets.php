@@ -1,4 +1,5 @@
 <?php
+$refreshInterval=10000;
 $hash = isset($_GET['q']) ? $_GET['q']: false;
 if ( empty($hash) ) {
     header('Location: ../index.php');
@@ -47,9 +48,6 @@ if ( empty($hash) ) {
                     },
                     cache: false,
                     success: function(dataArr){
-
-                        console.log(dataArr);
-
                         dataArr = JSON.parse(dataArr);
                         if(dataArr.length >0){
                             var arrayLength=dataArr.length;
@@ -59,17 +57,16 @@ if ( empty($hash) ) {
                                 tweets.unshift(dataArr[arrayLength-1-index]);
                                 tweets.splice(9, 1);
                             }
-                            console.log(tweets);
                             generateHtml(tweets,page);
                         }
                     }
                 });
             }
+
+            var refreshInterval=<?=$refreshInterval;?>
             //Refresh auto_load() function after 1000 milliseconds
-            setInterval(auto_load,3000);
-
-
-
+            setInterval(auto_load,refreshInterval);
+            
             $('#pagination-class<?=$page+1?>').addClass('active');
 
         });
