@@ -1,6 +1,6 @@
 <?php
-	$hash = $_GET['q'] ?? false;
-	$lastId = $_GET['lastId'] ?? false;
+	$hash = isset($_GET['q']) ? $_GET['q'] : false;
+	$lastId = isset($_GET['lastId']) ? $_GET['lastId'] : false;
 	if(empty($hash) || empty($lastId)) {
 		echo '[]';
 	} else {
