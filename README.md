@@ -21,10 +21,10 @@ here london is what we want to search for.
 
 4. make entry in cron tab https://curl.haxx.se/docs/install.html .
 
-* * * * *  /path/tp/php /full/path/to/file/FetchHashtag.php --hash_tag london >>/full/path/to/file/cron.log
+        * * * * *  /path/tp/php /full/path/to/file/FetchHashtag.php --hash_tag london >>/full/path/to/file/cron.log
 
 for example
-* * * * *  /usr/bin/php /var/www/html/search_hashtag/cron_jobs/FetchHashtag.php --hash_tag london >> /var/www/html/search_hashtag/cron_jobs/cron.log
+        * * * * *  /usr/bin/php /var/www/html/search_hashtag/cron_jobs/FetchHashtag.php --hash_tag london >> /var/www/html/search_hashtag/cron_jobs/cron.log
 
 5. after everything is set up start your server in project folder (inbuilt php server can be started by php -S localhost:8080)
 visit localhost:8080
